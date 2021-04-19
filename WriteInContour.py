@@ -62,7 +62,7 @@ lab = cv2.cvtColor(lab, cv2.COLOR_BGR2LAB)
 
 
 # 원본 이미지 불러오기
-image = cv2.imread("card3.jpg", 1)
+image = cv2.imread("./img/card3.jpg", 1)
 
 
 blurred = cv2.GaussianBlur(image, (5, 5), 0)

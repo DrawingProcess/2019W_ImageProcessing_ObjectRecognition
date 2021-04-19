@@ -9,7 +9,7 @@ def setLabel(image, str, contour):
     cv.putText(image, str, (pt_x, pt_y), cv.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,0), 1, 8)
 
 
-img_color = cv.imread('1.jpg', cv.IMREAD_COLOR)
+img_color = cv.imread('../img/cardWhite.jpg', cv.IMREAD_COLOR)
 cv.imshow('result', img_color)
 cv.waitKey(0)
 
