@@ -1,14 +1,17 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
-frame_width = int( cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-
-frame_height =int( cap.get( cv2.CAP_PROP_FRAME_HEIGHT))
+cap = cv2.VideoCapture('../img/cardStart.avi')
+# cap = cv2.VideoCapture(0)
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+print(frame_width, frame_height)
 
 # avi 파일일경우
 fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
-out = cv2.VideoWriter("output.avi", fourcc, 5.0, (1280,720))
+out = cv2.VideoWriter("../img/cardStart_MotionDetectionTracking.avi", fourcc, 15.0, (frame_width, frame_height))
+# out = cv2.VideoWriter(filename = "output.avi", fourcc = fourcc, fps = 15.0, frameSize = (frame_height, frame_width))
+
 # # mp4 파일일경우
 # fourcc = cv2.VideoWriter_fourcc(*"X264")
 # out = cv2.VideoWriter("output.mp4", fourcc, 15.0, (1280, 360))

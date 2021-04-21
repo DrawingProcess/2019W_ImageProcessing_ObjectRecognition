@@ -1,9 +1,10 @@
 import cv2
 import numpy as np
 
+cap = cv2.VideoCapture("./img/card.mp4")
 
-
-cap = cv2.VideoCapture("car-overhead-1.avi")
+fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+out = cv2.VideoWriter("output.mp4", fourcc, 15.0, (1280, 360))
 
 # 옵션 설명 http://layer0.authentise.com/segment-background-using-computer-vision.html
 fgbg = cv2.createBackgroundSubtractorMOG2(varThreshold=100)
@@ -13,11 +14,7 @@ while(1):
     ret, frame = cap.read()
 
     fgmask = fgbg.apply(frame)
-
-
-
     nlabels, labels, stats, centroids = cv2.connectedComponentsWithStats(fgmask)
-
 
     for index, centroid in enumerate(centroids):
         if stats[index][0] == 0 and stats[index][1] == 0:
@@ -41,5 +38,6 @@ while(1):
     if k == 27:
         break
 
+out.release()
 cap.release()
 cv2.destroyAllWindows()

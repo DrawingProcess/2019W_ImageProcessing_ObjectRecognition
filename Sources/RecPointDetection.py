@@ -196,7 +196,7 @@ def process(img_input, debug):
     return points
 
 
-img_input = cv2.imread('cardWhite.jpg')
+img_input = cv2.imread('./img/card4.jpg')
 height, width = img_input.shape[:2]
 
 points = process(img_input, debug=False)

@@ -1,7 +1,20 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('../img/cardBlack.avi')
+
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+print(frame_width, frame_height)
+
+# avi 파일일경우
+fourcc = cv2.VideoWriter_fourcc('X','V','I','D') # fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+out = cv2.VideoWriter("../img/cardBlack_MeansShift.avi", fourcc, 15.0, (frame_width, frame_height))
+# out = cv2.VideoWriter(filename = "output.avi", fourcc = fourcc, fps = 15.0, frameSize = (frame_height, frame_width))
+
+# # mp4 파일일경우
+# fourcc = cv2.VideoWriter_fourcc(*"X264")
+# out = cv2.VideoWriter("output.mp4", fourcc, 15.0, (1280, 360))
 
 # take first frame of the video
 ret, frame = cap.read()
@@ -28,12 +41,11 @@ while (1):
         dst = cv2.calcBackProject([hsv], [0], roi_hist, [0, 180], 1)
 
         # apply meanshift to get the new location
-        ret, track_window = cv2.CamShift(dst, track_window, term_crit)
+        ret, track_window = cv2.meanShift(dst, track_window, term_crit)
 
         # Draw it on image
-        pts = cv2.boxPoints(ret)
-        pts = np.int0(pts)
-        img2 = cv2.polylines(frame, [pts], True, 255, 2)
+        x, y, w, h = track_window
+        img2 = cv2.rectangle(frame, (x, y), (x + w, y + h), 255, 2)
         cv2.imshow('img2', img2)
 
         k = cv2.waitKey(60) & 0xff
@@ -45,5 +57,6 @@ while (1):
     else:
         break
 
-cv2.destroyAllWindows()
 cap.release()
+out.release()
+cv2.destroyAllWindows()
